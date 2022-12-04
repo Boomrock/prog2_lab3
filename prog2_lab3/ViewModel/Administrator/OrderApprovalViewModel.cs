@@ -4,7 +4,7 @@ using System.Text;
 
 namespace prog2_lab3.ViewModel.Administrator
 {
-    class OrderApprovalViewModel
+    class OrderApprovalViewModel: ViewModel
     {
         private MainWindow mainWindow;
 

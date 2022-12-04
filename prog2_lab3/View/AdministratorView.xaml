@@ -39,6 +39,7 @@
                 </TextBlock>
             </Button>
         </StackPanel>
-        
+        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" 
+                      Content="{Binding UserControls}" />
     </Grid>
 </Page>
