@@ -1,0 +1,44 @@
+﻿<Page x:Class="prog2_lab3.View.AdministratorView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:prog2_lab3.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdministratorView">
+
+    <Page.Resources>
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TextButton" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Button Command="{Binding LoadMakeOrderUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}" >
+                <TextBlock Style="{StaticResource TextButton}">
+                    Ожидающие отправления
+                </TextBlock>
+            </Button>
+            <Button Command="{Binding LoadYourOrdersUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}">
+                <TextBlock Style="{StaticResource TextButton}">
+                     Отправленные товары 
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        
+    </Grid>
+</Page>

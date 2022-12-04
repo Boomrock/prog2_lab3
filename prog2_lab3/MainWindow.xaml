@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:prog2_lab3"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+    <Grid >
+        <Frame x:Name="MainFrame" />
     </Grid>
 </Window>
