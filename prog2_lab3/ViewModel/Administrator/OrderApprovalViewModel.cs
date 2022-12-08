@@ -8,9 +8,9 @@ namespace prog2_lab3.ViewModel.Administrator
     {
         private MainWindow mainWindow;
 
-        public OrderApprovalViewModel(MainWindow mainWindow)
+        public OrderApprovalViewModel()
         {
-            this.mainWindow = mainWindow;
+
         }
     }
 }
