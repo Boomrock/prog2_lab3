@@ -12,10 +12,3 @@ namespace prog2_lab3.Models.Abstract
         string Owner;
     }
 }
-
-namespace prog2_lab3
-{
-    enum Сategories
-    {
-    }
-}
