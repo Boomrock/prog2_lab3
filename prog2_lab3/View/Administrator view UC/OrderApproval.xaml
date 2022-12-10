@@ -37,23 +37,23 @@
             </Grid>
 
 
-            <ListBox Grid.Column="0" Background="White" VerticalAlignment="Top">
-
-                <DataTemplate>
-                    <Grid Style="{StaticResource GridTemplate}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding}"  Grid.Column="0" Style="{StaticResource TextBoxTemplate}"/>
-                        <TextBlock Text="{Binding}"  Grid.Column="1" Style="{StaticResource TextBoxTemplate}"/>
-                        <TextBlock Text="{Binding}"  Grid.Column="2" Style="{StaticResource TextBoxTemplate}"/>
-                        <TextBlock Text="{Binding}"  Grid.Column="3" Style="{StaticResource TextBoxTemplate}"/>
-                    </Grid>
-                </DataTemplate>
-
+            <ListBox ItemsSource="{Binding OrdersForAproval}" SelectedItem="{Binding SelectedOrder}" Grid.Column="0" Background="White" VerticalAlignment="Top">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Style="{StaticResource GridTemplate}" Width="300">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="1"          Grid.Column="0" Style="{StaticResource TextBoxTemplate}"/>
+                            <TextBlock Text="2"    Grid.Column="1" Style="{StaticResource TextBoxTemplate}"/>
+                            <TextBlock Text="3"   Grid.Column="2" Style="{StaticResource TextBoxTemplate}"/>
+                            <TextBlock Text="4"      Grid.Column="3" Style="{StaticResource TextBoxTemplate}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
         
