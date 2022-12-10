@@ -2,6 +2,7 @@
 {
     enum Сategories
     {
-        TestCategory
+        TestCategory,
+        SecondCatigory,
     }
 }

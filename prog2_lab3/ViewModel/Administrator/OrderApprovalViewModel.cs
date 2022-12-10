@@ -14,9 +14,9 @@ namespace prog2_lab3.ViewModel.Administrator
         {
             OrdersForAproval = new ObservableCollection<Order>
             {
-                new Order(1, Сategories.TestCategory, new Models.realisation.Owner("Fedor", "Lyagushin", "Alekseevich", 1, "gorlopan", "123321q"), false)
+                new Order(1, Сategories.SecondCatigory, new Models.realisation.Owner("Fedor", "Lyagushin", "Alekseevich", 1, "gorlopan", "123321q"), false),
             };
-            OnPropertyChanged("OrdersForAproval");
+
         }
 
        
