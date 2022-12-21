@@ -1,4 +1,5 @@
 ﻿using prog2_lab3.Command;
+using prog2_lab3.Models;
 using prog2_lab3.View.Administrator_view_UC;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,12 @@ namespace prog2_lab3.ViewModel.Administrator
 {
     class AdministratorViewModel: ViewModel
     {
+        
         public OpenUCCommand OpenFirstUCCommand { get; set; }
-        OpenUCCommand OpenSecondUCCommand;
+        public OpenUCCommand OpenSecondUCCommand { get; set; }
         UserControl userControls;
+        Action<Order> Notify;
+        List<Order> orders;
         public UserControl UserControls
         {
             get
@@ -27,12 +31,18 @@ namespace prog2_lab3.ViewModel.Administrator
         }
         public AdministratorViewModel()
         {
-           /* OpenFirstUCCommand = new OpenUCCommand*/OpenUC( new OrderApproval(), new OrderApprovalViewModel()); 
+                orders = new List<Order> {
+                    new Order(1,Сategories.SecondCatigory, new Models.realisation.Owner("jan", "cherezov","andreevich",1, "rqt","123"), false),
+                };
+    
+            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new ApprovedOrder(), new ApprovedOrderViewModel(null, ref Notify));
+            OpenFirstUCCommand  = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(orders, ref Notify));
         }
         void OpenUC(UserControl userControl, object obj)
         {
             UserControls = userControl;
             UserControls.DataContext = obj;
         }
+        
     }
 }

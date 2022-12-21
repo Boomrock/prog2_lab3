@@ -33,7 +33,7 @@
                     Ожидающие отправления
                 </TextBlock>
             </Button>
-            <Button Command="{Binding LoadYourOrdersUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}">
+            <Button Command="{Binding OpenSecondUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}">
                 <TextBlock Style="{StaticResource TextButton}">
                      Отправленные товары 
                 </TextBlock>
