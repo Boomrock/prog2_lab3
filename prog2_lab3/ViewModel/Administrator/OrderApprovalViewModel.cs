@@ -7,34 +7,43 @@ using System.Text;
 
 namespace prog2_lab3.ViewModel.Administrator
 {
-    class OrderApprovalViewModel: ViewModel
+    class OrderApprovalViewModel : ViewModel
     {
         private ObservableCollection<Order> ordersForAproval;
         private Action<Order> NotifyChangeStatus;
+
+        #region public 
+        private Order selectedOrder;
+        public Order SelectedOrder
+        {
+            get
+            {
+                return selectedOrder;
+            }
+            set
+            {
+                selectedOrder = value;
+                OnPropertyChanged("SelectedOrder");
+            }
+        }
         public RelayCommand<Order> AprovalCommand { get; set; }
 
         public ObservableCollection<Order> OrdersForAproval { get => ordersForAproval; set => ordersForAproval = value; }
+        #endregion 
+
+
         public OrderApprovalViewModel(IEnumerable<Order> Orders, ref Action<Order> NotifyChangeStatus)
         {
             OrdersForAproval = new ObservableCollection<Order>(Orders);
+            AprovalCommand = new RelayCommand<Order>(ArovalOrder);
             this.NotifyChangeStatus = NotifyChangeStatus;
-            Order order = new Order(2, Сategories.SecondCatigory, new Models.realisation.Owner("neJan", "cherezov", "andreevich", 2, "rqt", "123"), true);
-            OrdersForAproval.Add(order);
-            ArovalOrder(order);
-            AprovalCommand =new RelayCommand<Order>(ArovalOrder);
-
-
         }
-        void ArovalOrder( Order order)
+        private void ArovalOrder(Order order)
         {
-            if (order.status)
-            {
-                ordersForAproval.Remove(order);
-                NotifyChangeStatus?.Invoke(order);
-            }
+            
+            OrdersForAproval.Remove(order);
+            order.status = true;
+            NotifyChangeStatus?.Invoke(order);
         }
-      
-
-       
     }
 }

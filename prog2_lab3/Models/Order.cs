@@ -10,7 +10,7 @@ namespace prog2_lab3.Models
         int id;
         Сategories сategory;
         Owner owner;
-        public bool status { get; private set; }
+        public bool status { get; set; }
         public int Id { get => id; set => id = value; }
         public string Status { get => status ? "Одобрено" : "Не одобрено"; }
         public Сategories Сategory { get => сategory; set => сategory = value; }
