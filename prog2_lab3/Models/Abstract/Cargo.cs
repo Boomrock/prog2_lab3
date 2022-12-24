@@ -8,7 +8,7 @@ namespace prog2_lab3.Models.Abstract
     abstract class Cargo
     {
         float Weight;
-        Сategories Сategory;
+        Categories Сategory;
         string Owner;
     }
 }

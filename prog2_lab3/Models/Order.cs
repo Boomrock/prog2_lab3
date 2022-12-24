@@ -10,17 +10,17 @@ namespace prog2_lab3.Models
     class Order
     {
         int id;
-        Сategories сategory;
+        Categories сategory;
         Owner owner;
         public bool status { get; set; }
         public int Id { get => id; set => id = value; }
         [JsonIgnore]
         public string Status { get => status ? "Одобрено" : "Не одобрено"; }
-        public Сategories Сategory { get => сategory; set => сategory = value; }
+        public Categories Сategory { get => сategory; set => сategory = value; }
 
         public Owner Owner { get => owner; set => owner = value; }
         public string NameOwmer { get => Owner.Name + " " + Owner.LastName + " " + Owner.Patronymic; }
-        public Order(int id, Сategories сategory, Owner owner, bool status)
+        public Order(int id, Categories сategory, Owner owner, bool status)
         {
             this.id = id;
             this.сategory = сategory;

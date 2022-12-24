@@ -22,18 +22,19 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <Button Command="{Binding LoadMakeOrderUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}">
-            <TextBlock FontFamily="Segoe UI Symbol" FontSize="14">
+            <Button Command="{Binding OpenSecondUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}">
+                <TextBlock FontFamily="Segoe UI Symbol" FontSize="14">
                     Заказать
-            </TextBlock>
-        </Button>
+                </TextBlock>
+            </Button>
             <Button Command="{Binding LoadYourOrdersUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}">
-            <TextBlock FontFamily="Segoe UI Symbol" FontSize="14">
+                <TextBlock FontFamily="Segoe UI Symbol" FontSize="14">
                      Ваши заказы
-            </TextBlock>
-        </Button>
+                </TextBlock>
+            </Button>
         </StackPanel>
-        <!--Контент-->
+        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" 
+                      Content="{Binding UserControls}" />
 
     </Grid>
 </Page>

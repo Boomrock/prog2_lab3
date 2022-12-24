@@ -35,7 +35,7 @@ namespace prog2_lab3.ViewModel.Administrator
         public AdministratorViewModel()
         {
             ApprovedOrders = new List<Order> {
-                    new Order(1,Сategories.SecondCatigory, new Models.realisation.Owner("jan", "cherezov","andreevich"), true),
+                    new Order(1,Categories.SecondCatigory, new Models.realisation.Owner("jan", "cherezov","andreevich"), true),
             };
             string path = $"C:\\Users\\федор\\Desktop\\DataBaseJson.txt";
             IDataBase<List<Order>> dataBaseOrder = new DataBaseJsone<List<Order>>();
