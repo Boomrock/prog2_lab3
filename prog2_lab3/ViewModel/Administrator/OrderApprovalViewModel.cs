@@ -1,5 +1,6 @@
 ﻿using prog2_lab3.Command;
 using prog2_lab3.Models;
+using prog2_lab3.Models.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,8 +11,8 @@ namespace prog2_lab3.ViewModel.Administrator
     class OrderApprovalViewModel : ViewModel
     {
         private ObservableCollection<Order> ordersForAproval;
-        private Action<Order> NotifyChangeStatus;
-
+        private Action<Order> NotifyChangeApproved;
+        private IDataBase<List<Order>> dataBase;
         #region public 
         private Order selectedOrder;
         public Order SelectedOrder
@@ -32,18 +33,28 @@ namespace prog2_lab3.ViewModel.Administrator
         #endregion 
 
 
-        public OrderApprovalViewModel(IEnumerable<Order> Orders, ref Action<Order> NotifyChangeStatus)
+        public OrderApprovalViewModel(IDataBase<List<Order>> dataBase, ref Action<Order> NotifyChangeApproved )
         {
-            OrdersForAproval = new ObservableCollection<Order>(Orders);
+            this.dataBase = dataBase;
+            this.NotifyChangeApproved = NotifyChangeApproved;
+            OrdersForAproval = new ObservableCollection<Order>();
+            try
+            {
+                OrdersForAproval = new ObservableCollection<Order>(dataBase.Get(nameof(OrdersForAproval)));
+            }
+            catch (Exception)
+            {
+            }
+          
             AprovalCommand = new RelayCommand<Order>(ArovalOrder);
-            this.NotifyChangeStatus = NotifyChangeStatus;
         }
         private void ArovalOrder(Order order)
         {
             
             OrdersForAproval.Remove(order);
             order.status = true;
-            NotifyChangeStatus?.Invoke(order);
+            NotifyChangeApproved?.Invoke(order);
+            dataBase.Set(nameof(OrdersForAproval), (List<Order>)OrdersForAproval.GetEnumerator());
         }
     }
 }

@@ -4,10 +4,17 @@ using System.Text;
 
 namespace prog2_lab3.Models.Abstract
 {
-    interface IDataBase
+    interface IDataBase<T>
     {
         public bool Connect(string path);
-        public object Get(string nameObject, string type);
-        public object Set(string nameObject, string type, object value);
+        public T Get(string nameObject);
+        public void Set(string nameObject, T value);
+    }
+    interface IDataBaseList<TypeIList, TypeObject > where TypeIList: IList<TypeObject>
+    {
+        public bool Connect(string path);
+        public TypeIList Get(string nameObject);
+        public void Set(string nameObject, TypeIList value);
+        public void AddTo(string nameObject, TypeObject value);
     }
 }

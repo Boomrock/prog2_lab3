@@ -19,7 +19,7 @@ namespace prog2_lab3.ViewModel.Administrator
         public OpenUCCommand OpenSecondUCCommand { get; set; }
         UserControl userControls;
         Action<Order> Notify;
-        List<Order> orders;
+        List<Order> ApprovedOrders;
         public UserControl UserControls
         {
             get
@@ -34,16 +34,15 @@ namespace prog2_lab3.ViewModel.Administrator
         }
         public AdministratorViewModel()
         {
-                orders = new List<Order> {
-                    new Order(1,Сategories.SecondCatigory, new Models.realisation.Owner("jan", "cherezov","andreevich",1, "rqt","123"), false),
-                };
+            ApprovedOrders = new List<Order> {
+                    new Order(1,Сategories.SecondCatigory, new Models.realisation.Owner("jan", "cherezov","andreevich"), true),
+            };
             string path = $"C:\\Users\\федор\\Desktop\\DataBaseJson.txt";
-            IDataBase dataBase = new DataBaseJsone();
-            dataBase.Connect(path);
-            dataBase.Set(nameof(orders), orders.GetType().ToString(), orders);
-
-            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new ApprovedOrder(), new ApprovedOrderViewModel(dataBase));
-            OpenFirstUCCommand  = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(orders, ref Notify));
+            IDataBase<List<Order>> dataBaseOrder = new DataBaseJsone<List<Order>>();
+            dataBaseOrder.Connect(path);
+            dataBaseOrder.Set(nameof(ApprovedOrders), ApprovedOrders);
+            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new ApprovedOrder(), new ApprovedOrderViewModel(dataBaseOrder, ref Notify));
+            OpenFirstUCCommand  = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBaseOrder, ref Notify));
         }
         void OpenUC(UserControl userControl, object obj)
         {
