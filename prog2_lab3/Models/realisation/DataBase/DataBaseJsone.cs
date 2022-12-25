@@ -2,18 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
+
 using System.IO;
+using System.Text.Json;
 
 namespace prog2_lab3.Models.realisation.DataBase
 {
-    class DataBaseJsone<T> : IDataBase<T>
+    class DataBaseJsone: IDataBase<object>
     {
         string path;
-        Dictionary<string, T> dictinary;
+        Dictionary<string, object> dictinary;
+        Dictionary<string, Type> types;
 
-        public Dictionary<string, T> Dictinary
+        public Dictionary<string, object> Dictinary
         {
+        
             get
             {
 
@@ -28,10 +31,12 @@ namespace prog2_lab3.Models.realisation.DataBase
         }
         private bool Connect()
         {
-            Dictinary = JsonConvert.DeserializeObject<Dictionary<string, T>>(File.ReadAllText(path));
+            JsonSerializer.Deserialize<object>(File.ReadAllText(path));
+         /*   Dictinary = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(path));*/
+
             if (Dictinary == null)
             {
-                Dictinary = new Dictionary<string, T>();
+                Dictinary = new Dictionary<string, object>();
                 return false;
             }
             return true;
@@ -39,12 +44,23 @@ namespace prog2_lab3.Models.realisation.DataBase
         public bool Connect(string path)
         {
             this.path = path;
+
+            types = JsonConvert.DeserializeAnonymousType<Type>(Dictinary["Type"], types[""]);
             try
             {
-                Dictinary = JsonConvert.DeserializeObject<Dictionary<string, T>>(File.ReadAllText(path));
+                Dictinary = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(path));
+                foreach (var key in Dictinary.Keys)
+                {
+
+                }
+                
+/*                foreach (var key in Dictinary.Keys)
+                {
+                    Dictinary[key] = JsonConvert ((JObject)Dictinary[key]).ToObject<object>();
+                }*/
                 if (Dictinary == null)
                 {
-                    Dictinary = new Dictionary<string, T>();
+                    Dictinary = new Dictionary<string, object>();
                 }
             }
             catch (Exception)
@@ -54,17 +70,22 @@ namespace prog2_lab3.Models.realisation.DataBase
             return true;
         }
 
-        public T Get(string nameObject)
+        public object Get(string nameObject)
         {
             Connect();
+            
             if (Dictinary.ContainsKey(nameObject))
+            {
+                
                 return Dictinary[nameObject];
+            }
+                
             else
                 return default;
 
         }
 
-        public void Set(string nameObject, T value)
+        public void Set(string nameObject, object value)
         {
 
             if (Dictinary.ContainsKey(nameObject))
@@ -77,7 +98,8 @@ namespace prog2_lab3.Models.realisation.DataBase
         }
         private bool save()
         {
-            string jsonFile = JsonConvert.SerializeObject(Dictinary);
+            Dictinary["Type"] = types;
+            string jsonFile = JsonConvert.SerializeObject(Dictinary, type: typeof(Dictionary<string, object>), settings: null);
             File.WriteAllText(path, jsonFile);
             return true;
         }

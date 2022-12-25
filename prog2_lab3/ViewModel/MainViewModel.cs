@@ -14,9 +14,11 @@ namespace prog2_lab3.ViewModel
         Page mainPage;
         public MainViewModel()
         {
-             MainPage = new UserView();
-             MainPage.DataContext = new UserViewModel();
-         }
+            /*  MainPage = new AdministratorView();
+              MainPage.DataContext = new AdministratorViewModel();*/
+            MainPage = new AdministratorView();
+            MainPage.DataContext = new AdministratorViewModel();
+        }
         public Page MainPage
         {
             get
@@ -29,13 +31,13 @@ namespace prog2_lab3.ViewModel
                 OnPropertyChanged("MainPage");
             }
         }
-
+/*
         public void LoadPage(Page page)
         {
             mainPage.DataContext = page;
             //отображаем
             MainPage.Content = page;
-        }
+        }*/
 
     }
 }
