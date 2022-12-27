@@ -13,6 +13,10 @@ namespace prog2_lab3.Models.realisation
         public string LastName;
         public string Patronymic;
         public Rights Right;
+        public User()
+        {
+       
+        }
         public User(string Name, string LastName, string Patronymic)
         {
             this.Name = Name;

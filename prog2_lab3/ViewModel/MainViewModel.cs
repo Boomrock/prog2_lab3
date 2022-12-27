@@ -1,4 +1,6 @@
-﻿using prog2_lab3.View;
+﻿using prog2_lab3.Models;
+using prog2_lab3.Models.realisation;
+using prog2_lab3.View;
 using prog2_lab3.ViewModel.Administrator;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ namespace prog2_lab3.ViewModel
         {
             /*  MainPage = new AdministratorView();
               MainPage.DataContext = new AdministratorViewModel();*/
+            
             MainPage = new AdministratorView();
             MainPage.DataContext = new AdministratorViewModel();
         }

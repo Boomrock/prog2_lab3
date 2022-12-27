@@ -1,4 +1,5 @@
-﻿using prog2_lab3.Command;
+﻿using Newtonsoft.Json;
+using prog2_lab3.Command;
 using prog2_lab3.Models;
 using prog2_lab3.Models.Abstract;
 using prog2_lab3.Models.realisation;
@@ -8,6 +9,7 @@ using prog2_lab3.View.Administrator_view_UC;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using System.Windows.Controls;
 
@@ -22,7 +24,7 @@ namespace prog2_lab3.ViewModel.Administrator
         UserControl userControls;
         IDataBase<object> dataBaseOrder;
         Action<Order> Notify;
-        List<Order> ApprovedOrders;
+        List<Order> OrdersForAproval;
         Observable<Order> observable;
         public UserControl UserControls
         {
@@ -39,13 +41,14 @@ namespace prog2_lab3.ViewModel.Administrator
         public AdministratorViewModel()
         {
             observable = new Observable<Order>();
-            ApprovedOrders = new List<Order> {
-                    new Order(1,Categories.SecondCatigory, new User("jan", "cherezov","andreevich"), true),
-            };
-            string path = $"C:\\Users\\федор\\Desktop\\DataBaseJson.txt";
+/*            OrdersForAproval = new List<Order> {
+                    new Order(1,Categories.SecondCatigory, new User("jan", "cherezov","andreevich"), false),
+                     new Order(1,Categories.SecondCatigory, new User("jan", "cherezov","andreevich"), false),
+            };*/
+            string path = $".\\DataBaseJson.txt";
             IDataBase<object> dataBaseOrder = new DataBaseJsone();
             dataBaseOrder.Connect(path);
-            dataBaseOrder.Set(nameof(ApprovedOrders), ApprovedOrders);
+           // dataBaseOrder.Set(nameof(OrdersForAproval), OrdersForAproval);
             OpenSecondUCCommand = new OpenUCCommand(OpenUC, new ApprovedOrder(), new ApprovedOrderViewModel(dataBaseOrder, observable));
             OpenFirstUCCommand  = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBaseOrder, observable));
         }
