@@ -15,7 +15,7 @@ namespace prog2_lab3.Models.realisation
         public Rights Right;
         public User()
         {
-       
+
         }
         public User(string Name, string LastName, string Patronymic)
         {

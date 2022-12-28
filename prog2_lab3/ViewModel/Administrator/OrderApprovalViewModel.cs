@@ -50,7 +50,7 @@ namespace prog2_lab3.ViewModel.Administrator
             AprovalCommand = new RelayCommand<Order>(ArovalOrder);
         }
         private void ArovalOrder(Order order)
-        {
+        { 
             if (order == null)
                 return;
             OrdersForAproval.Remove(order);
@@ -62,6 +62,12 @@ namespace prog2_lab3.ViewModel.Administrator
 
         public void Update(Order data)
         {
+            if(!data.status)
+            {
+                OrdersForAproval.Add(data);
+                dataBase.Set(nameof(OrdersForAproval), new List<Order>(OrdersForAproval));
+
+            }
         }
     }
 }

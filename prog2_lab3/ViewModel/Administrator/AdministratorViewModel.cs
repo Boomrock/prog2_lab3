@@ -18,8 +18,10 @@ namespace prog2_lab3.ViewModel.Administrator
 {
     class AdministratorViewModel: ViewModel
     {
-        
+       
+        //комманда для открытия первой UC 
         public OpenUCCommand OpenFirstUCCommand { get; set; }
+        //комманда для открытия второй UC 
         public OpenUCCommand OpenSecondUCCommand { get; set; }
         UserControl userControls;
         IDataBase<object> dataBaseOrder;
@@ -40,22 +42,29 @@ namespace prog2_lab3.ViewModel.Administrator
         }
         public AdministratorViewModel()
         {
-            observable = new Observable<Order>();
-/*            OrdersForAproval = new List<Order> {
-                    new Order(1,Categories.SecondCatigory, new User("jan", "cherezov","andreevich"), false),
-                     new Order(1,Categories.SecondCatigory, new User("jan", "cherezov","andreevich"), false),
-            };*/
+            //путь до базы данных 
             string path = $".\\DataBaseJson.txt";
-            IDataBase<object> dataBaseOrder = new DataBaseJsone();
-            dataBaseOrder.Connect(path);
-           // dataBaseOrder.Set(nameof(OrdersForAproval), OrdersForAproval);
-            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new ApprovedOrder(), new ApprovedOrderViewModel(dataBaseOrder, observable));
-            OpenFirstUCCommand  = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBaseOrder, observable));
+            //наблюдатель для первой и второй UC
+            observable = new Observable<Order>();
+            //База данных
+            IDataBase<object> dataBase = new DataBaseJsone();
+            //Соединение с базой данных
+            dataBase.Connect(path);
+            //комманда для открытия первой UC
+            OpenFirstUCCommand = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBase, observable));
+            //комманда для открытия второй UC
+            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new ApprovedOrder(), new ApprovedOrderViewModel(dataBase, observable));
+
         }
-        void OpenUC(UserControl userControl, object obj)
+        /// <summary>
+        /// Method for open UC
+        /// </summary>
+        /// <param name="userControl"></param>
+        /// <param name="dataContext"></param>
+        void OpenUC(UserControl userControl, object dataContext)
         {
             UserControls = userControl;
-            UserControls.DataContext = obj;
+            UserControls.DataContext = dataContext;
         }
         
     }

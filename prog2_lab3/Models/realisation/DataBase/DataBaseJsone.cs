@@ -11,92 +11,64 @@ namespace prog2_lab3.Models.realisation.DataBase
     {
         string path;
         string pathType;
-        Dictionary<string, object> dictinary;
+        Dictionary<string, object> dictionary;
         Dictionary<string, Type> types;
 
-        public Dictionary<string, object> Dictinary
-        {
-        
-            get
-            {
-
-                return dictinary;
-                
-            }
-            set
-            {
-                dictinary = value;
-            }
-        }
         private bool Connect()
         {
-            try
-            {
-                var jsonFile = File.ReadAllText(path);
-                var tempDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile);
-                types = JsonConvert.DeserializeObject<Dictionary<string, Type>>(File.ReadAllText(pathType));
-                if (types == null)
-                    types = new Dictionary<string, Type>();
-                if (tempDictionary == null)
-                    return false;
-                foreach (var key in tempDictionary.Keys)
-                {
-                    if (!Dictinary.ContainsKey(key))
-                    {
-                        var type = types[key];
-                        Dictinary.Add(key, JsonConvert.DeserializeAnonymousType(tempDictionary[key], type));
-                    }
+            //открываем файл
+            var jsonFile = File.ReadAllText(path);
 
-                }
-            }
-            catch (Exception)
-            {
+            //Десерелизуем в Словарь в котором у нас назавние переменной и текст с ее json содежржанием
+            var tempDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile);
+
+            //открываем и десерелизуем файл в котором хранятся привезки типы данных к переменным
+            types = JsonConvert.DeserializeObject<Dictionary<string, Type>>(File.ReadAllText(pathType));
+
+
+            if (types == null)
+                types = new Dictionary<string, Type>();
+            if (tempDictionary == null)
                 return false;
+
+
+            dictionary = new Dictionary<string, object>();
+
+            // открываем файл
+
+            //связываем в один Словарь название перемменных их данные и тип 
+            foreach (var key in tempDictionary.Keys)
+            {
+                if (!dictionary.ContainsKey(key))
+                {
+                    var type = types[key];
+
+                    dictionary.Add(key, JsonConvert.DeserializeObject(tempDictionary[key], type));
+                }
+
             }
             return true;
         }
         public bool Connect(string path)
         {
-            this.path = path;
-            this.pathType = Path.GetDirectoryName(path) +@"\\"+ Path.GetFileNameWithoutExtension(path) + "Type.txt";
-            Dictinary = new Dictionary<string, object>();
-           
-                var jsonFile = File.ReadAllText(path);
-                var tempDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile);
-                types = JsonConvert.DeserializeObject<Dictionary<string, Type>>(File.ReadAllText(pathType));
-                if(types == null)
-                    types = new Dictionary<string, Type>();
-                if (tempDictionary == null)
-                    return false;
-                foreach (var key in tempDictionary.Keys)
-                {
-                    if (!Dictinary.ContainsKey(key))
-                    {
-                        var type = types[key];
-                      
-                            Dictinary.Add(key, JsonConvert.DeserializeObject(tempDictionary[key], type));
-                        
-                       
-                        
-                    }
-
-                }
-            
-       /*     catch (Exception)
-            {
+            if (!File.Exists(path))
                 return false;
-            }*/
-            return true;
+            this.path = path;
+
+            //путь к файлу с типами данных
+            this.pathType = Path.GetDirectoryName(path) +@"\\"+ Path.GetFileNameWithoutExtension(path) + "Type.txt";
+
+            return Connect();
         }
 
         public object Get(string nameObject)
         {
             Connect();
             
-            if (Dictinary.ContainsKey(nameObject))
+            if (dictionary.ContainsKey(nameObject))
             {
                 
-                return Dictinary[nameObject];
+                return dictionary[nameObject];
             }
                 
             else
@@ -107,11 +79,14 @@ namespace prog2_lab3.Models.realisation.DataBase
         public void Set(string nameObject, object value)
         {
 
-            if (Dictinary.ContainsKey(nameObject))
-                Dictinary[nameObject] = value;
+            if (dictionary.ContainsKey(nameObject))
+            {
+                dictionary[nameObject] = value;
+                save();
+            }
             else
             {
-                Dictinary.Add(nameObject, value);
+                dictionary.Add(nameObject, value);
                 if (!types.ContainsKey(nameObject))
                     types.Add(nameObject, value.GetType());
                 save();
@@ -122,9 +97,9 @@ namespace prog2_lab3.Models.realisation.DataBase
 
             var tempstr = new Dictionary<string, string>();
 
-            foreach (var key in Dictinary.Keys)
+            foreach (var key in dictionary.Keys)
             {
-                tempstr.Add(key, JsonConvert.SerializeObject(Dictinary[key]));
+                tempstr.Add(key, JsonConvert.SerializeObject(dictionary[key]));
             }
             string jsonFile = JsonConvert.SerializeObject(tempstr);
             File.WriteAllText(path, jsonFile);
