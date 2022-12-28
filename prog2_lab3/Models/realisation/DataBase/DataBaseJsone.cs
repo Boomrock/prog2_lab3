@@ -22,7 +22,7 @@ namespace prog2_lab3.Models.realisation.DataBase
             //Десерелизуем в Словарь в котором у нас назавние переменной и текст с ее json содежржанием
             var tempDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile);
 
-            //открываем и десерелизуем файл в котором хранятся привезки типы данных к переменным
+            //открываем и десерелизуем файл в котором хранятся привезки типы данных к переменным 
             types = JsonConvert.DeserializeObject<Dictionary<string, Type>>(File.ReadAllText(pathType));
 
 
