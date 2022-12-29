@@ -1,11 +1,15 @@
-﻿using prog2_lab3.Command;
+﻿using Newtonsoft.Json;
+using prog2_lab3.Command;
 using prog2_lab3.Models;
 using prog2_lab3.Models.Abstract;
+using prog2_lab3.Models.realisation;
 using prog2_lab3.Models.realisation.DataBase;
+using prog2_lab3.Models.realisation.Observer;
 using prog2_lab3.View.Administrator_view_UC;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using System.Windows.Controls;
 
@@ -14,12 +18,16 @@ namespace prog2_lab3.ViewModel.Administrator
 {
     class AdministratorViewModel: ViewModel
     {
-        
+       
+        //комманда для открытия первой UC 
         public OpenUCCommand OpenFirstUCCommand { get; set; }
+        //комманда для открытия второй UC 
         public OpenUCCommand OpenSecondUCCommand { get; set; }
         UserControl userControls;
+        IDataBase<object> dataBaseOrder;
         Action<Order> Notify;
-        List<Order> ApprovedOrders;
+        List<Order> OrdersForAproval;
+        Observable<Order> observable;
         public UserControl UserControls
         {
             get
@@ -34,20 +42,29 @@ namespace prog2_lab3.ViewModel.Administrator
         }
         public AdministratorViewModel()
         {
-            ApprovedOrders = new List<Order> {
-                    new Order(1,Categories.SecondCatigory, new Models.realisation.Owner("jan", "cherezov","andreevich"), true),
-            };
-            string path = $"C:\\Users\\федор\\Desktop\\DataBaseJson.txt";
-            IDataBase<List<Order>> dataBaseOrder = new DataBaseJsone<List<Order>>();
-            dataBaseOrder.Connect(path);
-            dataBaseOrder.Set(nameof(ApprovedOrders), ApprovedOrders);
-            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new ApprovedOrder(), new ApprovedOrderViewModel(dataBaseOrder, ref Notify));
-            OpenFirstUCCommand  = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBaseOrder, ref Notify));
+            //путь до базы данных 
+            string path = $".\\DataBaseJson.txt";
+            //наблюдатель для первой и второй UC
+            observable = new Observable<Order>();
+            //База данных
+            IDataBase<object> dataBase = new DataBaseJsone();
+            //Соединение с базой данных
+            dataBase.Connect(path);
+            //комманда для открытия первой UC
+            OpenFirstUCCommand = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBase, observable));
+            //комманда для открытия второй UC
+            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new ApprovedOrder(), new ApprovedOrderViewModel(dataBase, observable));
+
         }
-        void OpenUC(UserControl userControl, object obj)
+        /// <summary>
+        /// Method for open UC
+        /// </summary>
+        /// <param name="userControl"></param>
+        /// <param name="dataContext"></param>
+        void OpenUC(UserControl userControl, object dataContext)
         {
             UserControls = userControl;
-            UserControls.DataContext = obj;
+            UserControls.DataContext = dataContext;
         }
         
     }

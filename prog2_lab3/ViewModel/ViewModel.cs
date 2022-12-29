@@ -6,7 +6,7 @@ using System.Text;
 
 namespace prog2_lab3.ViewModel
 {
-    class ViewModel : INotifyPropertyChanged
+    abstract class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

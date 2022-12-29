@@ -7,17 +7,7 @@ using System.Windows.Controls;
 namespace prog2_lab3
 {
 
-    /// <summary>
-    /// Типы вьюшек для загрузки
-    /// </summary>
-    public enum ViewType
-    {
-        OrderApproval
-    }
 
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()

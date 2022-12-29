@@ -16,9 +16,9 @@ namespace prog2_lab3.View.UserViewUC
     /// <summary>
     /// Логика взаимодействия для MakeOrder.xaml
     /// </summary>
-    public partial class MakeOrder : UserControl
+    public partial class MakeOrderUC : UserControl
     {
-        public MakeOrder()
+        public MakeOrderUC()
         {
             InitializeComponent();
         }

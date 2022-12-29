@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="prog2_lab3.View.UserViewUC.MakeOrder"
+﻿<UserControl x:Class="prog2_lab3.View.UserViewUC.MakeOrderUC"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,5 +27,6 @@
         <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedCity}"          ItemsSource="{Binding Citys}"       Name="ListBoxDestination"           Grid.Column="1" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
         <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedTransport}"     ItemsSource="{Binding Transports}"  Name="ListBoxTransportSelection"    Grid.Column="2" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
         <Button Background="Black" Content="Оформить заказ" Command="{Binding SendOrder}" BorderBrush="Black" Foreground="White" Name ="ButtonSendOrder" Grid.Column="3" VerticalAlignment="Top" Grid.Row="1" />
-        </Grid>
+
+    </Grid>
 </UserControl>

@@ -2,83 +2,109 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace prog2_lab3.Models.realisation.DataBase
 {
-    class DataBaseJsone<T> : IDataBase<T>
+    class DataBaseJsone: IDataBase<object>
     {
         string path;
-        Dictionary<string, T> dictinary;
+        string pathType;
+        Dictionary<string, object> dictionary;
+        Dictionary<string, Type> types;
 
-        public Dictionary<string, T> Dictinary
-        {
-            get
-            {
-
-                return dictinary;
-                
-            }
-            set
-            {
-                dictinary = value;
-                save();
-            }
-        }
         private bool Connect()
         {
-            Dictinary = JsonConvert.DeserializeObject<Dictionary<string, T>>(File.ReadAllText(path));
-            if (Dictinary == null)
-            {
-                Dictinary = new Dictionary<string, T>();
+            //открываем файл
+            var jsonFile = File.ReadAllText(path);
+
+            //Десерелизуем в Словарь в котором у нас назавние переменной и текст с ее json содежржанием
+            var tempDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile);
+
+            //открываем и десерелизуем файл в котором хранятся привезки типы данных к переменным
+            types = JsonConvert.DeserializeObject<Dictionary<string, Type>>(File.ReadAllText(pathType));
+
+
+            if (types == null)
+                types = new Dictionary<string, Type>();
+            if (tempDictionary == null)
                 return false;
+
+
+            dictionary = new Dictionary<string, object>();
+
+            // открываем файл
+
+            //связываем в один Словарь название перемменных их данные и тип 
+            foreach (var key in tempDictionary.Keys)
+            {
+                if (!dictionary.ContainsKey(key))
+                {
+                    var type = types[key];
+
+                    dictionary.Add(key, JsonConvert.DeserializeObject(tempDictionary[key], type));
+                }
+
             }
             return true;
         }
         public bool Connect(string path)
         {
-            this.path = path;
-            try
-            {
-                Dictinary = JsonConvert.DeserializeObject<Dictionary<string, T>>(File.ReadAllText(path));
-                if (Dictinary == null)
-                {
-                    Dictinary = new Dictionary<string, T>();
-                }
-            }
-            catch (Exception)
-            {
+            if (!File.Exists(path))
                 return false;
-            }
-            return true;
+            this.path = path;
+
+            //путь к файлу с типами данных
+            this.pathType = Path.GetDirectoryName(path) +@"\\"+ Path.GetFileNameWithoutExtension(path) + "Type.txt";
+
+            return Connect();
         }
 
-        public T Get(string nameObject)
+        public object Get(string nameObject)
         {
             Connect();
-            if (Dictinary.ContainsKey(nameObject))
-                return Dictinary[nameObject];
+            
+            if (dictionary.ContainsKey(nameObject))
+            {
+                
+                return dictionary[nameObject];
+            }
+                
             else
                 return default;
 
         }
 
-        public void Set(string nameObject, T value)
+        public void Set(string nameObject, object value)
         {
 
-            if (Dictinary.ContainsKey(nameObject))
-                Dictinary[nameObject] = value;
+            if (dictionary.ContainsKey(nameObject))
+            {
+                dictionary[nameObject] = value;
+                save();
+            }
             else
             {
-                Dictinary.Add(nameObject, value);
+                dictionary.Add(nameObject, value);
+                if (!types.ContainsKey(nameObject))
+                    types.Add(nameObject, value.GetType());
                 save();
             }
         }
         private bool save()
         {
-            string jsonFile = JsonConvert.SerializeObject(Dictinary);
+
+            var tempstr = new Dictionary<string, string>();
+
+            foreach (var key in dictionary.Keys)
+            {
+                tempstr.Add(key, JsonConvert.SerializeObject(dictionary[key]));
+            }
+            string jsonFile = JsonConvert.SerializeObject(tempstr);
             File.WriteAllText(path, jsonFile);
+            jsonFile = JsonConvert.SerializeObject(types);
+            File.WriteAllText(pathType, jsonFile);
             return true;
         }
         /*  string path;

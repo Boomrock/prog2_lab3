@@ -27,4 +27,26 @@ namespace prog2_lab3.Command
             execute.Invoke((T)parameter);
         }
     }
+    class RelayCommand: ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+        Action execute;
+
+
+        public RelayCommand(Action execute)
+        {
+
+            this.execute = execute;
+
+        }
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            execute.Invoke();
+        }
+    }
 }
