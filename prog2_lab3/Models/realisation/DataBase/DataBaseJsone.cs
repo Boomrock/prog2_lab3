@@ -14,6 +14,16 @@ namespace prog2_lab3.Models.realisation.DataBase
         Dictionary<string, object> dictionary;
         Dictionary<string, Type> types;
 
+        public DataBaseJsone(string path)
+        {
+            if (!File.Exists(path))
+                return;
+            this.path = path;
+
+            //путь к файлу с типами данных
+            this.pathType = Path.GetDirectoryName(path) + @"\\" + Path.GetFileNameWithoutExtension(path) + "Type.txt";
+            Connect();
+        }    
         private bool Connect()
         {
             //открываем файл
@@ -49,7 +59,7 @@ namespace prog2_lab3.Models.realisation.DataBase
             }
             return true;
         }
-        public bool Connect(string path)
+      /*  public bool Connect(string path)
         {
             if (!File.Exists(path))
                 return false;
@@ -59,7 +69,7 @@ namespace prog2_lab3.Models.realisation.DataBase
             this.pathType = Path.GetDirectoryName(path) +@"\\"+ Path.GetFileNameWithoutExtension(path) + "Type.txt";
 
             return Connect();
-        }
+        }*/
 
         public object Get(string nameObject)
         {

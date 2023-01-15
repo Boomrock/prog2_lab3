@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace prog2_lab3.View.Administrator_view_UC
 {
     /// <summary>
-    /// Логика взаимодействия для UserControl1.xaml
+    /// Логика взаимодействия для OrderAproval.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class OrderApproval : UserControl
     {
-        public UserControl1()
+        public OrderApproval()
         {
             InitializeComponent();
         }

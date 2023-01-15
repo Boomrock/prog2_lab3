@@ -5,6 +5,7 @@ using prog2_lab3.View.UserViewUC;
 using prog2_lab3.ViewModel.UserUC;
 using prog2_lab3.Models.realisation;
 using System.Windows.Controls;
+using System;
 using System.Collections.Generic;
 
 namespace prog2_lab3.ViewModel
@@ -16,7 +17,7 @@ namespace prog2_lab3.ViewModel
         public OpenUCCommand OpenSecondUCCommand { get; set; }
 
 
-        private IDataBase<object> deliveryParametrsDataBase;
+        private readonly IDataBase<object> dataBase;
         UserControl userControls;
         public UserControl UserControls
         {
@@ -31,10 +32,13 @@ namespace prog2_lab3.ViewModel
             }
         }
 
-        public UserViewModel(User user)
+        public UserViewModel(User user, IDataBase<object> dataBase)
         {
-            deliveryParametrsDataBase = new DataBaseJsone();
-            deliveryParametrsDataBase.Connect("Path in File");
+            if(dataBase == null)
+            {
+                throw new ArgumentNullException("dataBase");
+            }
+            this.dataBase = dataBase;
 
             //OpenSecondUCCommand = new OpenUCCommand(OpenUC, new MakeOrderUC(), new MakeOrderViewModel(deliveryParametrsDataBase, user));
             //OpenFirstUCCommand = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBaseOrder, ref Notify));
