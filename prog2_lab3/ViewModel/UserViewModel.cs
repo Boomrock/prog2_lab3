@@ -1,13 +1,12 @@
 ﻿using prog2_lab3.Command;
 using prog2_lab3.Models.Abstract;
-using prog2_lab3.Models.realisation.DataBase;
 using prog2_lab3.View.UserViewUC;
 using prog2_lab3.ViewModel.UserUC;
 using prog2_lab3.Models.realisation;
 using System.Windows.Controls;
 using System;
-using System.Collections.Generic;
-
+using prog2_lab3.Models.realisation.Observer;
+using prog2_lab3.Models;
 namespace prog2_lab3.ViewModel
 {
 
@@ -15,6 +14,7 @@ namespace prog2_lab3.ViewModel
     {
         public OpenUCCommand OpenFirstUCCommand { get; set; }
         public OpenUCCommand OpenSecondUCCommand { get; set; }
+        public Observable<Order> observable;
 
 
         private readonly IDataBase<object> dataBase;
@@ -39,8 +39,9 @@ namespace prog2_lab3.ViewModel
                 throw new ArgumentNullException("dataBase");
             }
             this.dataBase = dataBase;
-
-            OpenFirstUCCommand = new OpenUCCommand(OpenUC, new MakeOrderUC(), new MakeOrderViewModel(dataBase, user));
+            observable = new Observable<Order>();
+            OpenFirstUCCommand = new OpenUCCommand(OpenUC, new MakeOrderUC(), new MakeOrderViewModel(dataBase, user, observable));
+            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new UserOrderUC(), new UserOrderUCViewModel(dataBase, user, observable));
         }
 
      

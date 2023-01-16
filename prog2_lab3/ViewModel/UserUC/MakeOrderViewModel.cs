@@ -12,7 +12,7 @@ using System.Text;
 
 namespace prog2_lab3.ViewModel.UserUC
 {
-    class MakeOrderViewModel : ViewModel
+    class MakeOrderViewModel : ViewModel, prog2_lab3.Models.Abstract.Observer.IObserver<Order>
     {
 
         private User owner;
@@ -47,9 +47,11 @@ namespace prog2_lab3.ViewModel.UserUC
         public RelayCommand SendOrder { get; set; }
         public List<Product> Products { get; set; }
         public List<string> Cities { get; set; }
-
-        public MakeOrderViewModel(IDataBase<object> dataBase, User owner)
+        public RelayCommand MakeOrderCommand { get; set; }
+        prog2_lab3.Models.Abstract.Observer.IObservable<Order> observable;
+        public MakeOrderViewModel(IDataBase<object> dataBase, User owner, prog2_lab3.Models.Abstract.Observer.IObservable<Order> observable)
         {
+            this.observable = observable;
             this.owner = owner;
             this.dataBase = dataBase;
             ProductNames = new List<string>();
@@ -58,29 +60,35 @@ namespace prog2_lab3.ViewModel.UserUC
             Products = (List<Product>)dataBase.Get("Products");
             Cities = (List<string>)dataBase.Get("Cities");
             Products.ForEach(s => ProductNames.Add(s.Name));
-            SendOrder = new RelayCommand(sendOrder);
-
-        }
-/*        float makeOrder()
-        {
-
-            int lastIdOrder = (int)dataBase.Get("LastIdOrder");
-
-            Order order = new Order(lastIdOrder, owner);
-
-            dataBase.Set("LastIdOrder", lastIdOrder++);
-            return ;
-
-        }*/
-        void sendOrder()
-        {
-            List<Order> orders = (List<Order>)dataBase.Get("OrdersForAproval");
-            int lastIdOrder = (int)dataBase.Get("LastIdOrder");
+            MakeOrderCommand = new RelayCommand(makeOrder);
 
 
         }
+        void makeOrder()
+        {
 
 
+            int lastIdOrder = (int)dataBase.Get("LastIdOrder");
+            var product         = Products.Find(s => s.Name == SelectedProduct);
+            var transport       = Transports.Find(s => s.Name == SelectedTransport);
+            float TotalPrice    = product.Price + product.Weight * 0.5f + transport.Cost;
+            Order order = new Order(lastIdOrder++, product, owner,false, transport, TotalPrice);
 
+            var OrdersForAproval = (List<Order>)dataBase.Get("OrdersForApproval");
+            if(OrdersForAproval == null)
+            {
+                OrdersForAproval = new List<Order>(); 
+            }
+            OrdersForAproval.Add(order);
+            observable.NotifyObservers(order);
+            dataBase.Set("LastIdOrder", lastIdOrder);
+            dataBase.Set("OrdersForApproval", OrdersForAproval);
+
+        }
+
+        public void Update(Order data)
+        {
+            
+        }
     }
 }

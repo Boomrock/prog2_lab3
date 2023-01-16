@@ -26,7 +26,7 @@
                     Заказать
                 </TextBlock>
             </Button>
-            <Button Command="{Binding LoadYourOrdersUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}">
+            <Button Command="{Binding OpenSecondUCCommand, Mode=OneTime}" Style="{StaticResource MenuButton}">
                 <TextBlock FontFamily="Segoe UI Symbol" FontSize="14">
                      Ваши заказы
                 </TextBlock>

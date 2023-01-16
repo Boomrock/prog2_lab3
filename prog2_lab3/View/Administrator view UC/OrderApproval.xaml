@@ -28,43 +28,23 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <Grid Grid.Column="0" Style="{StaticResource GridTemplate}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Номер заказа"  Grid.Column="0" Style="{StaticResource TextBoxTemplate}"/>
-                <TextBlock Text="Класс товара"  Grid.Column="1" Style="{StaticResource TextBoxTemplate}"/>
-                <TextBlock Text="Заказчик"      Grid.Column="2" Style="{StaticResource TextBoxTemplate}"/>
-                <TextBlock Text="Статус"        Grid.Column="3" Style="{StaticResource TextBoxTemplate}"/>
 
-            </Grid>
-            <ListBox Grid.Column="0" Background="Transparent" VerticalAlignment="Top">
+            <StackPanel>
+            <ListView ItemsSource="{Binding OrdersForApproval}" SelectedItem="{Binding SelectedOrder}" Grid.Column="0" Background="White" VerticalAlignment="Top" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path= Id}" Width="100">Номер заказа</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path= Product.Name}">Класс товара</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path= NameOwmer}">Заказчик</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path= Status}">Статус</GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+          
 
-                <DataTemplate>
-                    <Grid Style="{StaticResource GridTemplate}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding}"  Grid.Column="0" Style="{StaticResource TextBoxTemplate}"/>
-                        <TextBlock Text="{Binding}"  Grid.Column="1" Style="{StaticResource TextBoxTemplate}"/>
-                        <TextBlock Text="{Binding}"  Grid.Column="2" Style="{StaticResource TextBoxTemplate}"/>
-                        <TextBlock Text="{Binding}"  Grid.Column="3" Style="{StaticResource TextBoxTemplate}"/>
-                    </Grid>
-                </DataTemplate>
-
-            </ListBox>
-
-        </StackPanel>
         <StackPanel Grid.Column="1" >
-            <Button Content="Одобрить" Style="{StaticResource ButtonSlectedItem}" />
-            <Button Content="Отклонить"  Style="{StaticResource ButtonSlectedItem}" />
+            <Button Content="Одобрить" Style="{StaticResource ButtonSlectedItem}" Command="{Binding AprovalCommand}" CommandParameter="{Binding SelectedOrder }"/>
         </StackPanel>
 
 

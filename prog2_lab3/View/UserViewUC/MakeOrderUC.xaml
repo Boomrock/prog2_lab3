@@ -26,7 +26,7 @@
         <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedProduct}"      ItemsSource="{Binding ProductNames}"  Name="ListBoxCategory"              Grid.Column="0" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
         <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedCity}"          ItemsSource="{Binding Cities}"       Name="ListBoxDestination"           Grid.Column="1" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
         <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedTransport}"     ItemsSource="{Binding TransportsString}"  Name="ListBoxTransportSelection"    Grid.Column="2" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
-        <Button Background="Black" Content="Оформить заказ" Command="{Binding SendOrder}" BorderBrush="Black" Foreground="White" Name ="ButtonSendOrder" Grid.Column="3" VerticalAlignment="Top" Grid.Row="1" />
+        <Button Background="Gray" Content="Оформить заказ" Command="{Binding MakeOrderCommand}" BorderBrush="Black" Foreground="White" Name ="ButtonSendOrder" Grid.Column="3" VerticalAlignment="Top" Grid.Row="1" />
 
     </Grid>
 </UserControl>
