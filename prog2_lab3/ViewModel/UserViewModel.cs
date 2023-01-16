@@ -1,12 +1,12 @@
 ﻿using prog2_lab3.Command;
 using prog2_lab3.Models.Abstract;
-using prog2_lab3.Models.realisation.DataBase;
 using prog2_lab3.View.UserViewUC;
 using prog2_lab3.ViewModel.UserUC;
 using prog2_lab3.Models.realisation;
 using System.Windows.Controls;
-using System.Collections.Generic;
-
+using System;
+using prog2_lab3.Models.realisation.Observer;
+using prog2_lab3.Models;
 namespace prog2_lab3.ViewModel
 {
 
@@ -14,9 +14,10 @@ namespace prog2_lab3.ViewModel
     {
         public OpenUCCommand OpenFirstUCCommand { get; set; }
         public OpenUCCommand OpenSecondUCCommand { get; set; }
+        public Observable<Order> observable;
 
 
-        private IDataBase<object> deliveryParametrsDataBase;
+        private readonly IDataBase<object> dataBase;
         UserControl userControls;
         public UserControl UserControls
         {
@@ -31,13 +32,16 @@ namespace prog2_lab3.ViewModel
             }
         }
 
-        public UserViewModel(User user)
+        public UserViewModel(User user, IDataBase<object> dataBase)
         {
-            deliveryParametrsDataBase = new DataBaseJsone();
-            deliveryParametrsDataBase.Connect("Path in File");
-
-            //OpenSecondUCCommand = new OpenUCCommand(OpenUC, new MakeOrderUC(), new MakeOrderViewModel(deliveryParametrsDataBase, user));
-            //OpenFirstUCCommand = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBaseOrder, ref Notify));
+            if(dataBase == null)
+            {
+                throw new ArgumentNullException("dataBase");
+            }
+            this.dataBase = dataBase;
+            observable = new Observable<Order>();
+            OpenFirstUCCommand = new OpenUCCommand(OpenUC, new MakeOrderUC(), new MakeOrderViewModel(dataBase, user, observable));
+            OpenSecondUCCommand = new OpenUCCommand(OpenUC, new UserOrderUC(), new UserOrderUCViewModel(dataBase, user, observable));
         }
 
      

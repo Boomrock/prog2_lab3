@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace prog2_lab3.View.Administrator_view_UC
+namespace prog2_lab3.View
 {
     /// <summary>
-    /// Логика взаимодействия для AprovedOrders.xaml
+    /// Логика взаимодействия для LoginView.xaml
     /// </summary>
-    public partial class AprovedOrders : UserControl
+    public partial class LoginView : UserControl
     {
-        public AprovedOrders()
+        public LoginView()
         {
             InitializeComponent();
         }

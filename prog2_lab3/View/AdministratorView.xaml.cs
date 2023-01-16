@@ -16,7 +16,7 @@ namespace prog2_lab3.View
     /// <summary>
     /// Логика взаимодействия для AdministratorView.xaml
     /// </summary>
-    public partial class AdministratorView : Page
+    public partial class AdministratorView : UserControl
     {
         public AdministratorView()
         {

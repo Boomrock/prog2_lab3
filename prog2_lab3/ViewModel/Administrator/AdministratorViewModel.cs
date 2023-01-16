@@ -23,11 +23,9 @@ namespace prog2_lab3.ViewModel.Administrator
         public OpenUCCommand OpenFirstUCCommand { get; set; }
         //комманда для открытия второй UC 
         public OpenUCCommand OpenSecondUCCommand { get; set; }
-        UserControl userControls;
-        IDataBase<object> dataBaseOrder;
-        Action<Order> Notify;
-        List<Order> OrdersForAproval;
-        Observable<Order> observable;
+        private UserControl userControls;
+        private readonly IDataBase<object> dataBase;
+        private readonly Observable<Order> observable;
         public UserControl UserControls
         {
             get
@@ -40,16 +38,11 @@ namespace prog2_lab3.ViewModel.Administrator
                 OnPropertyChanged("UserControls");
             }
         }
-        public AdministratorViewModel()
+        public AdministratorViewModel(IDataBase<object> dataBase)
         {
-            //путь до базы данных 
-            string path = $".\\DataBaseJson.txt";
+            this.dataBase = dataBase;
             //наблюдатель для первой и второй UC
             observable = new Observable<Order>();
-            //База данных
-            IDataBase<object> dataBase = new DataBaseJsone();
-            //Соединение с базой данных
-            dataBase.Connect(path);
             //комманда для открытия первой UC
             OpenFirstUCCommand = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBase, observable));
             //комманда для открытия второй UC

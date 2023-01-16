@@ -23,10 +23,10 @@
         <Label Name="LabelDestination" Content="Выберите место назначения:"         Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Name="LabelTransportSelection" Content="Выберите вид транспорта:"    Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Name="LabelSendOrder" Content="Отправить заказ:"                     Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedCategory}"      ItemsSource="{Binding Category}"  Name="ListBoxCategory"              Grid.Column="0" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
-        <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedCity}"          ItemsSource="{Binding Citys}"       Name="ListBoxDestination"           Grid.Column="1" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
-        <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedTransport}"     ItemsSource="{Binding Transports}"  Name="ListBoxTransportSelection"    Grid.Column="2" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
-        <Button Background="Black" Content="Оформить заказ" Command="{Binding SendOrder}" BorderBrush="Black" Foreground="White" Name ="ButtonSendOrder" Grid.Column="3" VerticalAlignment="Top" Grid.Row="1" />
+        <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedProduct}"      ItemsSource="{Binding ProductNames}"  Name="ListBoxCategory"              Grid.Column="0" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
+        <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedCity}"          ItemsSource="{Binding Cities}"       Name="ListBoxDestination"           Grid.Column="1" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
+        <ListBox BorderBrush="Black" SelectedItem="{Binding SelectedTransport}"     ItemsSource="{Binding TransportsString}"  Name="ListBoxTransportSelection"    Grid.Column="2" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,10,0"/>
+        <Button Background="Gray" Content="Оформить заказ" Command="{Binding MakeOrderCommand}" BorderBrush="Black" Foreground="White" Name ="ButtonSendOrder" Grid.Column="3" VerticalAlignment="Top" Grid.Row="1" />
 
     </Grid>
 </UserControl>

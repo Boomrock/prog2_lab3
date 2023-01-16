@@ -10,7 +10,7 @@ namespace prog2_lab3.ViewModel.Administrator
 {
     class OrderApprovalViewModel : ViewModel, IObserver<Order>
     {
-        private ObservableCollection<Order> ordersForAproval;
+        private ObservableCollection<Order> ordersForApproval;
         private IDataBase<object> dataBase;
         private IObservable<Order> observable;
         #region public 
@@ -29,7 +29,7 @@ namespace prog2_lab3.ViewModel.Administrator
         }
         public RelayCommand<Order> AprovalCommand { get; set; }
 
-        public ObservableCollection<Order> OrdersForAproval { get => ordersForAproval; set => ordersForAproval = value; }
+        public ObservableCollection<Order> OrdersForApproval { get => ordersForApproval; set => ordersForApproval = value; }
         #endregion 
 
 
@@ -38,23 +38,23 @@ namespace prog2_lab3.ViewModel.Administrator
             this.dataBase = dataBase;
             this.observable = observable;
             observable.AddObserver(this);
-            OrdersForAproval = new ObservableCollection<Order>();
+            OrdersForApproval = new ObservableCollection<Order>();
             try
             {
-                OrdersForAproval = new ObservableCollection<Order>((List<Order>)dataBase.Get("OrdersForAproval"));
+                OrdersForApproval = new ObservableCollection<Order>((List<Order>)dataBase.Get(nameof(OrdersForApproval)));
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show(ex.StackTrace + "\n code: 416857454867787");
             }
-            AprovalCommand = new RelayCommand<Order>(ArovalOrder);
+            AprovalCommand = new RelayCommand<Order>(AprovalOrder);
         }
-        private void ArovalOrder(Order order)
+        private void AprovalOrder(Order order)
         { 
             if (order == null)
                 return;
-            OrdersForAproval.Remove(order);
-            dataBase.Set(nameof(OrdersForAproval), new List<Order>(OrdersForAproval));
+            OrdersForApproval.Remove(order);
+            dataBase.Set(nameof(OrdersForApproval), new List<Order>(OrdersForApproval));
             order.status = true;
             observable.NotifyObservers(order);
             
@@ -64,8 +64,8 @@ namespace prog2_lab3.ViewModel.Administrator
         {
             if(!data.status)
             {
-                OrdersForAproval.Add(data);
-                dataBase.Set(nameof(OrdersForAproval), new List<Order>(OrdersForAproval));
+                OrdersForApproval.Add(data);
+                dataBase.Set(nameof(OrdersForApproval), new List<Order>(OrdersForApproval));
 
             }
         }

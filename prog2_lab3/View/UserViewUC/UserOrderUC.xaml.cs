@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace prog2_lab3.View.Administrator_view_UC
+namespace prog2_lab3.View.UserViewUC
 {
     /// <summary>
-    /// Логика взаимодействия для UserControl1.xaml
+    /// Логика взаимодействия для UserOrder.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class UserOrderUC : UserControl
     {
-        public UserControl1()
+        public UserOrderUC()
         {
             InitializeComponent();
         }

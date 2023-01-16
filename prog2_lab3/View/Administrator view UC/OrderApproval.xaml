@@ -15,27 +15,38 @@
             <Setter Property ="HorizontalAlignment"  Value="Stretch"/>
             <Setter Property ="VerticalAlignment"  Value="Top"/>
         </Style>
+        <Style x:Key="ButtonSlectedItem" TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property ="Width"  Value="90"/>
+            <Setter Property ="HorizontalAlignment"  Value="Center"/>
+            <Setter Property ="VerticalAlignment"  Value="Top"/>
+            <Setter Property ="Margin"  Value="0,30,0,0"/>
+        </Style>
     </UserControl.Resources>
     <Grid Width="auto" Height="auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <ListView ItemsSource="{Binding OrdersForAproval}" SelectedItem="{Binding SelectedOrder}" Grid.Column="0" Background="White" VerticalAlignment="Top" >
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path= Id}" Width="100">Номер заказа</GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path= Сategory}">Класс товара</GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path= NameOwmer}">Заказчик</GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path= Status}">Статус</GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+
+            <StackPanel>
+            <ListView ItemsSource="{Binding OrdersForApproval}" SelectedItem="{Binding SelectedOrder}" Grid.Column="0" Background="White" VerticalAlignment="Top" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path= Id}" Width="100">Номер заказа</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path= Product.Name}">Класс товара</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path= NameOwmer}">Заказчик</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path= Status}">Статус</GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+          
+
+        <StackPanel Grid.Column="1" >
+            <Button Content="Одобрить" Style="{StaticResource ButtonSlectedItem}" Command="{Binding AprovalCommand}" CommandParameter="{Binding SelectedOrder }"/>
         </StackPanel>
-        <Button Grid.Column="1" Width="100" Height="50" VerticalAlignment="Top" Margin="10" Command="{Binding AprovalCommand}" CommandParameter="{Binding SelectedOrder}">
-            одобрить 
-        </Button>
+
 
 
     </Grid>
