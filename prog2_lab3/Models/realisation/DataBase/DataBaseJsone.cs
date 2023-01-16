@@ -19,6 +19,7 @@ namespace prog2_lab3.Models.realisation.DataBase
             if (!File.Exists(path))
                 return;
             this.path = path;
+            dictionary = new Dictionary<string, object>();
 
             //путь к файлу с типами данных
             this.pathType = Path.GetDirectoryName(path) + @"\\" + Path.GetFileNameWithoutExtension(path) + "Type.txt";
@@ -42,8 +43,7 @@ namespace prog2_lab3.Models.realisation.DataBase
                 return false;
 
 
-            dictionary = new Dictionary<string, object>();
-
+           
             // открываем файл
 
             //связываем в один Словарь название перемменных их данные и тип 

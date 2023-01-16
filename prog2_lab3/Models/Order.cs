@@ -27,5 +27,9 @@ namespace prog2_lab3.Models
             this.owner = owner;
             this.status = status;
         }
+
+
+        public Order() { }
+
     }
 }

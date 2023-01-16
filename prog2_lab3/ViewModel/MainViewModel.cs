@@ -12,7 +12,7 @@ namespace prog2_lab3.ViewModel
 {
     class MainViewModel: ViewModel, prog2_lab3.Models.Abstract.Observer.IObserver<User>
     {
-        private Page mainPage;
+        private UserControl mainPage;
         private readonly IDataBase<object> dataBase;
         public MainViewModel()
         {
@@ -21,14 +21,14 @@ namespace prog2_lab3.ViewModel
             //Соединение с базой данных
             dataBase = new DataBaseJsone(path);
 
-            //dataBase.Set("Users", new List<User> { new User(1, "admin", "admin", "Fedor", "Lyagushin", "Alekseevich", Rights.Administator) });
+            //dataBase.Set("Users", new List<User> { new User(1, "pass", "pass", "Fedor", "Lyagushin", "Alekseevich", Rights.User)});
 
             var LoginDataContext = new LoginViewModel(dataBase);
             LoginDataContext.AddObserver(this);
             OpenPage(new LoginView(), LoginDataContext);
 
         }
-        public Page MainPage
+        public UserControl MainPage
         {
             get
             {
@@ -40,7 +40,7 @@ namespace prog2_lab3.ViewModel
                 OnPropertyChanged("MainPage");
             }
         }
-        void OpenPage(Page page, object DataContext) 
+        void OpenPage(UserControl page, object DataContext) 
         {
             MainPage = page;
             MainPage.DataContext = DataContext;

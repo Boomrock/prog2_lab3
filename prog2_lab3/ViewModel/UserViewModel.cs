@@ -40,8 +40,7 @@ namespace prog2_lab3.ViewModel
             }
             this.dataBase = dataBase;
 
-            //OpenSecondUCCommand = new OpenUCCommand(OpenUC, new MakeOrderUC(), new MakeOrderViewModel(deliveryParametrsDataBase, user));
-            //OpenFirstUCCommand = new OpenUCCommand(OpenUC, new OrderApproval(), new OrderApprovalViewModel(dataBaseOrder, ref Notify));
+            OpenFirstUCCommand = new OpenUCCommand(OpenUC, new MakeOrderUC(), new MakeOrderViewModel(dataBase, user));
         }
 
      

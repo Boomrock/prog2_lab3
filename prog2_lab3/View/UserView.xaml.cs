@@ -16,7 +16,7 @@ namespace prog2_lab3.View
     /// <summary>
     /// Логика взаимодействия для Page1.xaml
     /// </summary>
-    public partial class UserView : Page
+    public partial class UserView : UserControl
     {
         public UserView()
         {
