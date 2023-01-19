@@ -17,12 +17,17 @@ namespace prog2_lab3.Models.realisation.DataBase
         public DataBaseJsone(string path)
         {
             if (!File.Exists(path))
-                return;
+                File.Create(path);
+                
             this.path = path;
             dictionary = new Dictionary<string, object>();
 
             //путь к файлу с типами данных
             this.pathType = Path.GetDirectoryName(path) + @"\\" + Path.GetFileNameWithoutExtension(path) + "Type.txt";
+
+            if (!File.Exists(pathType))
+                File.Create(pathType);
+
             Connect();
         }    
         private bool Connect()
@@ -40,7 +45,7 @@ namespace prog2_lab3.Models.realisation.DataBase
             if (types == null)
                 types = new Dictionary<string, Type>();
             if (tempDictionary == null)
-                return false;
+                tempDictionary = new Dictionary<string, string>();
 
 
            
@@ -73,7 +78,6 @@ namespace prog2_lab3.Models.realisation.DataBase
 
         public object Get(string nameObject)
         {
-            Connect();
             
             if (dictionary.ContainsKey(nameObject))
             {
