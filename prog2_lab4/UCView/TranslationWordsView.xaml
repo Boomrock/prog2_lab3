@@ -8,6 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
         <Grid>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="80" Content="Назад" Command="{Binding BackToMainMenuCommand}"/>
+
         <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Переведите слово"/>
             <TextBlock />

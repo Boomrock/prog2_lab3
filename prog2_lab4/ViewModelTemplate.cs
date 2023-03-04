@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace prog2_lab4
 {
-    internal class ViewModelTemplate
+    public class ViewModelTemplate : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

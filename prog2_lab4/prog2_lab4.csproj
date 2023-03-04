@@ -58,6 +58,7 @@
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Model\Page.cs" />
+    <Compile Include="Observer.cs" />
     <Compile Include="Observer\IObservable.cs" />
     <Compile Include="Observer\IObserver.cs" />
     <Compile Include="UCViewModel\AddNewWordsViewModel.cs" />

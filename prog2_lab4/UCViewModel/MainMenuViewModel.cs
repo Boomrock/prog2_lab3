@@ -9,20 +9,25 @@ using System.Windows.Controls;
 
 namespace prog2_lab4.UCViewModel
 {
-    internal class MainMenuViewModel : IObservable<Model.Page>
+    internal class MainMenuViewModel : IObservable<Model.Page>, IObserver<Model.Page>
     {
         public RelayCommand OpenTranslationCheckCommand { get; set; }
         public RelayCommand OpenTranslationWordsCommand { get; set; }
         public RelayCommand OpenAddNewWordsCommand { get; set; }
         Model.Page AddNewWords, TranslationCheck, TranslationWords;
-        public MainMenuViewModel()
+        Model.Page page;
+        public MainMenuViewModel( UserControl View , IObserver<Model.Page> MainWindowViewModel)
         {
             OpenTranslationCheckCommand = new RelayCommand(OpenTranslationCheck);
             OpenTranslationWordsCommand = new RelayCommand(OpenTranslationWords);
             OpenAddNewWordsCommand = new RelayCommand(OpenAddNewWords);
-            AddNewWords = new Model.Page(new AddNewWordsView(), new AddNewWordsViewModel());
-            TranslationCheck = new Model.Page(new TranslationCheckView(), new TranslationCheckViewModel());
-            TranslationWords = new Model.Page(new TranslationWordsView(), new TranslationWordsViewModel());
+            page = new Model.Page(View, this);
+            AddNewWords = new Model.Page(new AddNewWordsView(), new AddNewWordsViewModel(page));
+            TranslationCheck = new Model.Page(new TranslationCheckView(), new TranslationCheckViewModel(page));
+            TranslationWords = new Model.Page(new TranslationWordsView(), new TranslationWordsViewModel(page));
+            ((IObservable<Model.Page>)AddNewWords.DataContext).AddObserver(MainWindowViewModel);
+            ((IObservable<Model.Page>)TranslationCheck.DataContext).AddObserver(MainWindowViewModel);
+            ((IObservable<Model.Page>)TranslationWords.DataContext).AddObserver(MainWindowViewModel);
         }
 
         private void OpenAddNewWords()
@@ -59,7 +64,12 @@ namespace prog2_lab4.UCViewModel
 
         public void NotifyObservers(Model.Page data)
         {
-            _pages.ForEach(i=>i.Update(data));
+            _pages[0].Update(data);
+        }
+
+        public void Update(Model.Page data)
+        {
+            NotifyObservers(data);
         }
     }
 }
